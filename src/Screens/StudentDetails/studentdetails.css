@@ -1,0 +1,27 @@
+.search-block{
+    display: flex;
+    width: 100vw;
+    height: max-content;
+    padding: 2rem 0 1rem 2rem;
+    justify-content: flex-start;
+    gap: 4rem;
+}
+
+.user-table-block{
+    border: 1px solid grey;
+}
+
+@media only screen and (max-width: 768px){
+    .search-block{
+        flex-direction: column;
+        width: 80vw;
+
+        align-content: center;
+        justify-content: center;
+    }
+
+}
+
+@media(max-width: 320px){
+
+}

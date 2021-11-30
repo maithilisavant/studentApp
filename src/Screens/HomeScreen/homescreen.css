@@ -1,0 +1,100 @@
+.container{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    font-family: 'Roboto';
+}
+
+.title{
+    width: 100vw;
+    height: 10vh;
+    padding: 20px 0 0 20px;
+    font-weight: 500;
+    font-size: 44px;
+
+    /* background-color: chocolate; */
+}
+
+.block-1{
+    display: flex;
+    width: inherit;
+    height: 10vh;
+    padding-left: 20px;
+    flex-direction: row;
+
+    justify-content: flex-start;
+    gap: 10rem;
+    align-items: center;
+
+    /* background-color: cornflowerblue; */
+}
+
+.student-count-block{
+    flex-direction: column;
+    padding-top: 10px;
+
+    font-size: 32px;
+}
+
+.student-cards-block{
+    justify-content: center;
+    /* background-color: darkgoldenrod; */
+}
+
+.student-card-more{
+    justify-content: center;
+    align-self: center;
+}
+
+@media only screen and (max-width: 768px){
+    .title{
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .block-1{
+        justify-content: space-evenly;
+        gap:0rem;
+    }
+}
+
+/* @media only screen and (min-width: 1024px) and (max-height: 1366px){
+    .title{
+        height: 6vh;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 0rem;
+        padding-bottom: 0;
+    }
+    .block-1{
+        height: 10vh;
+        justify-content: space-evenly;
+        gap:0rem;
+        padding: 0 0 0 0;
+    }
+} */
+
+@media(max-width: 320px){
+    .title{
+        justify-content: center;
+        text-align: center;
+        font-weight: 500;
+        font-size: 30px;
+    }
+    .block-1{
+        height: 10vh;
+        gap:1rem;
+        justify-content: center;
+        
+    }
+    
+    .student-count-block{
+        flex-direction: row;
+        font-size: 20px;
+    }
+
+    .student-cards-block{
+        margin-top: 3rem;
+    }
+}

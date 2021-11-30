@@ -1,0 +1,75 @@
+.card-container{
+    display: flex;
+    width: 20vw;
+    border-radius: 0.5rem;
+    box-shadow: 0.05rem 0.1rem 0.3rem -0.03rem rgba(0, 0, 0, 0.45);
+    padding-bottom: 1rem;
+    overflow: hidden;
+
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 1.2rem;
+    margin: 0.8rem;
+}
+
+/* .student-count{
+    color: rgb(101, 97, 181)
+} */
+
+.card-container:hover{
+    outline: 4px solid rgb(123, 119, 204);
+    transition: outline 0.4s linear;
+}
+
+.edit-delete-block{
+    display: flex;
+    justify-content: space-between;
+}
+
+.userprofile{
+    justify-content: center;
+    align-content: center;
+}
+
+.profile-image{
+    width: 5vw;
+    /* width: 56;
+    height: 56; */
+    align-self: center;
+    justify-self: center;
+}
+
+.profile-block{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.label{
+    font-weight: 200;
+    color:rgb(94, 91, 91)
+}
+
+.input{
+    margin-bottom: 0.8rem;
+}
+
+.student-card-more:hover{
+    background-color:rgb(123, 119, 204);
+    transition: background-color 0.9s linear;
+}
+
+@media only screen and (max-width: 768px){
+    .card-container{
+        width: 80%;
+        align-self: center;
+        place-self: center;
+        justify-self: center;
+    }
+
+    .profile-image{
+        width: 12vw;
+    }
+}
