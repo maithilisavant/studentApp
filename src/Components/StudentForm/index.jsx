@@ -10,6 +10,7 @@ import {
   RadioGroup,
   InputBase,
 } from "@material-ui/core";
+import { connect } from "react-redux";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -29,15 +30,34 @@ import PhoneInput from "react-phone-input-2";
 import "./studentform.css";
 import "react-phone-input-2/lib/style.css";
 import { hobbies, appColor } from "../../Store/Data/data";
+import { getCollegeDetails, getStudentDetails } from "../../Store/Actions/actions";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="bottom" ref={ref} {...props} />;
 });
 
-export default class StudentForm extends Component {
+class StudentForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      name: "",
+      dob: "",
+      college: {},
+      address: "",
+      email: "",
+      gender: "",
+      phone: "",
+      userHobbies: [],
+      customHobby: "",
+    };
+  }
+
+  onChangeHandler = (e, type) => {
+    this.setState({ [type]: e.target.value });
+  };
+
+  componentDidMount(){
+    this.props.getCollegeDetails("abc");
   }
 
   render() {
@@ -71,7 +91,10 @@ export default class StudentForm extends Component {
                             autoComplete={"off"}
                             placeholder={"Enter Name"}
                             inputProps={{ maxLength: "50" }}
-                            value={"changeOrderTitle"}
+                            value={this.state.name}
+                            onChange={(e) => {
+                              this.onChangeHandler(e, "name");
+                            }}
                           />
                         </Grid>
                       </Grid>
@@ -90,6 +113,10 @@ export default class StudentForm extends Component {
                             <Stack spacing={3}>
                               <DatePicker
                                 label=""
+                                value={this.state.dob}
+                                onChange={(value) => {
+                                  this.setState({ dob: value });
+                                }}
                                 renderInput={(params) => (
                                   <TextField
                                     variant="outlined"
@@ -146,7 +173,10 @@ export default class StudentForm extends Component {
                             autoComplete={"off"}
                             placeholder={"Enter Email"}
                             inputProps={{ maxLength: "50" }}
-                            value={"changeOrderTitle"}
+                            value={this.state.email}
+                            onChange={(e) => {
+                              this.onChangeHandler(e, "email");
+                            }}
                           />
                         </Grid>
                       </Grid>
@@ -168,9 +198,10 @@ export default class StudentForm extends Component {
                           <InputBase
                             className="common-form-input address-input"
                             autoComplete={"off"}
-                            placeholder={"Enter Email"}
+                            placeholder={"Enter Address"}
                             inputProps={{ maxLength: "300" }}
-                            value={"changeOrderTitle"}
+                            value={this.state.address}
+                            onChange={(e) => this.onChangeHandler(e, "address")}
                             rows={5}
                             multiline={true}
                           />
@@ -235,6 +266,10 @@ export default class StudentForm extends Component {
                               country={"in"}
                               placeholder="+91 123 456 7890"
                               disableCountryCode={false}
+                              value={this.state.phone}
+                              onChange={(phone) =>
+                                this.setState({ phone: phone })
+                              }
                             />
                           </div>
                         </Grid>
@@ -293,9 +328,12 @@ export default class StudentForm extends Component {
                           <InputBase
                             className="common-form-input"
                             autoComplete={"off"}
-                            placeholder={"Enter Email"}
+                            placeholder={"Enter Custom Hobby"}
                             inputProps={{ maxLength: "50" }}
-                            value={"changeOrderTitle"}
+                            value={this.state.customHobby}
+                            onChange={(e) => {
+                              this.onChangeHandler(e, "customHobby");
+                            }}
                           />
                         </Grid>
                       </Grid>
@@ -307,7 +345,7 @@ export default class StudentForm extends Component {
           </Grid>
         </DialogContent>
         <DialogActions className="form-button-container">
-          <Button className="form-button form-save-button common-bk-color">
+          <Button className="form-button form-save-button common-bk-color" onClick={() => {console.log(this.props.collegeDetails)}}>
             Save
           </Button>
           <Button className="form-button common-border-color common-color">
@@ -318,3 +356,16 @@ export default class StudentForm extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    studentDetails: state.studentDetails,
+    collegeDetails: state.collegeDetails,
+
+  };
+};
+
+export default connect(mapStateToProps, {
+  getStudentDetails,
+  getCollegeDetails,
+})(StudentForm);
