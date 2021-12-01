@@ -11,17 +11,45 @@
     border: 1px solid grey;
 }
 
+.search-block{
+    width: max-content;
+    align-self: flex-end;
+    justify-content: end;
+    padding-right: 2rem;
+}
+
+.search-box{
+    width: 20rem;
+}
+
 @media only screen and (max-width: 768px){
     .search-block{
         flex-direction: column;
         width: 80vw;
-
         align-content: center;
         justify-content: center;
     }
 
+    .user-table-block{
+        width: 100vw;
+    }
 }
 
 @media(max-width: 320px){
+    .container{
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        padding: 4rem 0 0 0;
+    }
 
+    .search-box{
+        width: 15rem;
+    }
+
+    .user-table-block{
+        width: 100vw;
+        justify-self: center;
+        align-self: center;
+    }
 }

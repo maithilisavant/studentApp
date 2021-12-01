@@ -24,11 +24,11 @@ class Homescreen extends Component {
     const { showPopup } = this.state;
     return (
       <div>
-        {/* <StudentForm
+        <StudentForm
           open={showPopup}
           close={this.togglePopup}
           onClick={this.togglePopup}
-        /> */}
+        />
         <div className="container">
           <div className="title">DASHBOARD</div>
 
@@ -44,10 +44,9 @@ class Homescreen extends Component {
           </div>
 
           <Grid className="student-cards-block" container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-              <StudentCard/>
-              <StudentCard/>
-              <StudentCard/>
-              
+            <StudentCard/>
+            <StudentCard/>
+            <StudentCard/>
           </Grid>
 
           <div className="student-card-more">

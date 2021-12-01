@@ -50,7 +50,7 @@ class StudentDetails extends Component {
             <TextField className="search-box" variant="outlined" label="Search"></TextField>
 
             <div className="new-student">
-              <Button variant="contained" className="new-student-button">Add New Student</Button>
+              <Button variant="contained" className="new-student-button" onCLick={this.togglePopup}>Add New Student</Button>
             </div>
           </div>
 

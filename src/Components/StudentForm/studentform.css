@@ -1,0 +1,29 @@
+Dialog{
+    width: 100vw;
+}
+
+.dialog-container{
+    display: flex;
+    width: 100vw;
+    height: max-content;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.formdialog{
+    display: flex;
+    width:20vw;
+    height: max-content;
+    overflow-y: hidden;
+    padding: 20px 40px 20px 40px;
+
+    justify-content: center;
+}
+
+.input{
+    display: flex;
+    width: 15rem;
+    height: auto;
+    /* background-color: chocolate; */
+}
