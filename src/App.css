@@ -28,6 +28,57 @@
   color: #61dafb;
 }
 
+.common-bk-color {
+  background-color: #a29bfe !important;
+}
+
+.common-color {
+  color: #a29bfe !important;
+}
+
+.common-border-color {
+  border: 2px solid #a29bfe !important;
+}
+
+@font-face {
+  font-family: Poppins-Bold;
+  src: url(./Assets/font/Poppins-Bold.ttf);
+}
+@font-face {
+  font-family: Poppins-Black;
+  src: url(./Assets/font/Poppins-Black.ttf);
+}
+@font-face {
+  font-family: Poppins-ExtraLight;
+  src: url(./Assets/font/Poppins-ExtraLight.ttf);
+}
+@font-face {
+  font-family: Poppins-Bold;
+  src: url(./Assets/font/Poppins-Bold.ttf);
+}
+@font-face {
+  font-family: Poppins-Italic;
+  src: url(./Assets/font/Poppins-Italic.ttf);
+}
+@font-face {
+  font-family: Poppins-Light;
+  src: url(./Assets/font/Poppins-Light.ttf);
+}
+@font-face {
+  font-family: Poppins-Medium;
+  src: url(./Assets/font/Poppins-Medium.ttf);
+}
+@font-face {
+  font-family: Poppins-Regular;
+  src: url(./Assets/font/Poppins-Regular.ttf);
+}
+@font-face {
+  font-family: Poppins-Thin;
+  src: url(./Assets/font/Poppins-Thin.ttf);
+}
+
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

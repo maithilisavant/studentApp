@@ -3,9 +3,9 @@ import React from 'react';
 import "./studentCard.css";
 import profileFemale from "../../Assets/F.jpg";
 import profileMale from "../../Assets/M.jpg";
-import {Avatar} from '@material-ui/core';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import EditIcon from '@mui/icons-material/EditOutlined'; 
+import {Avatar, IconButton} from '@material-ui/core';
+// import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+// import {EditIcon} from '@mui/icons-material'; 
 
 function studentCard(){
     function stringAvatar(name) {
@@ -19,8 +19,8 @@ function studentCard(){
         <div className="card-container">
             <div className="profile-block">
                 <div className="edit-delete-block">
-                    <EditIcon></EditIcon>
-                    <DeleteIcon></DeleteIcon>
+                    {/* <IconButton><EditIcon></EditIcon></IconButton>
+                    <IconButton><DeleteIcon></DeleteIcon></IconButton> */}
                 </div>
                 <div className="userprofile">
                     <img src={profileFemale} alt="user-profile" className="profile-image" ></img>

@@ -27,6 +27,7 @@
 }
 
 .userprofile{
+    display: flex;
     justify-content: center;
     align-content: center;
 }
@@ -53,12 +54,15 @@
 }
 
 .input{
-    margin-bottom: 0.8rem;
+    width: inherit;
+    margin: 0.8rem;
+    font-size: 18px;
+    justify-content: center;
 }
 
 .student-card-more:hover{
     background-color:rgb(123, 119, 204);
-    transition: background-color 0.9s linear;
+    transition: background-color 0.3s linear;
 }
 
 @media only screen and (max-width: 768px){

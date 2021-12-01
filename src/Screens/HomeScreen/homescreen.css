@@ -8,13 +8,22 @@
 
 .title{
     width: 100vw;
-    height: 10vh;
+    height: 30vh;
     padding: 20px 0 0 20px;
     font-weight: 500;
     font-size: 44px;
-
-    /* background-color: chocolate; */
+    font-family: Poppins-Medium;
+    flex-direction: row;
+    /* background-color: rgb(123, 119, 204); */
 }
+
+/* .header-image{
+    display: flex;
+    width:23vw;
+    position: relative;
+    justify-self: flex-end;
+    align-self: flex-end;
+} */
 
 .block-1{
     display: flex;
@@ -46,6 +55,14 @@
     justify-content: center;
     align-self: center;
 }
+
+.footer{
+    display: flex;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+  }
 
 @media only screen and (max-width: 768px){
     .title{

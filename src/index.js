@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css";
+import "./App.css";
 import reportWebVitals from "./reportWebVitals";
 import { applyMiddleware } from "redux";
 import { Provider } from "react-redux";

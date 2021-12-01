@@ -1,14 +1,22 @@
+.main-container{
+    display: flex;
+    flex-direction: column;
+
+}
 .search-block{
     display: flex;
-    width: 100vw;
+    width: 100%;
     height: max-content;
-    padding: 2rem 0 1rem 2rem;
-    justify-content: flex-start;
+    padding: 2rem 0 0rem 2rem;
     gap: 4rem;
+    margin-right: 1rem;
+    align-items: center;
 }
 
 .user-table-block{
     border: 1px solid grey;
+    border-radius: 10px;
+    margin:3rem;
 }
 
 .search-block{
@@ -26,12 +34,16 @@
     .search-block{
         flex-direction: column;
         width: 80vw;
+        padding: 2rem 2rem 2rem 3rem;
+        margin: 0;
+        gap: 1rem;
         align-content: center;
         justify-content: center;
     }
 
     .user-table-block{
         width: 100vw;
+        margin: 0rem;
     }
 }
 
@@ -51,5 +63,6 @@
         width: 100vw;
         justify-self: center;
         align-self: center;
+        margin: 0rem;
     }
 }
