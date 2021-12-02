@@ -33,7 +33,7 @@ import { hobbies, appColor } from "../../Store/Data/data";
 import {
   getCollegeDetails,
   getStudentDetails,
-  setCollegeEmpty,
+  storeStudentDetails,
 } from "../../Store/Actions/actions";
 import { emailValidator, phoneValidator } from "../../Functions/functions";
 
@@ -45,6 +45,8 @@ class StudentForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+
+
       name: "",
       dob: "",
       college: {},
@@ -65,7 +67,8 @@ class StudentForm extends Component {
         phone: "",
         userHobbies: "",
         customHobby: "",
-      }, 
+      },
+    
     };
   }
 
@@ -84,13 +87,16 @@ class StudentForm extends Component {
 
     //FOR BLANK NAME
     if (!this.state.name || !this.state.name.length) {
+      
       formIsValid = false;
       errors.name = "Please Enter a valid name.";
       this.setState({ errors: errors });
     }
 
     //FOR BLANK DOB
-    if (!this.state.dob || !this.state.dob.length) {
+    if (!this.state.dob || this.state.dob == "") {
+      
+      console.log(typeof this.state.dob);
       formIsValid = false;
       errors.dob = "Please Enter a valid dob.";
       this.setState({ errors: errors });
@@ -98,13 +104,15 @@ class StudentForm extends Component {
 
     //FOR BLANK & VALID EMAIL
     if (!this.state.email || !this.state.email.length || !emailValidator(this.state.email)) {
+      
       formIsValid = false;
       errors.email = "Please Enter a valid email.";
       this.setState({ errors: errors });
     }
  
     //FOR BLANK COLLEGE
-    if (!this.state.college || !this.state.college.length) {
+    if (!this.state.college || this.state.college == "") {
+      
       formIsValid = false;
       errors.college = "Please Enter a valid college.";
       this.setState({ errors: errors });
@@ -112,6 +120,7 @@ class StudentForm extends Component {
 
     //FOR BLANK ADDRESS
     if (!this.state.address || !this.state.address.length) {
+      
       formIsValid = false;
       errors.address = "Please Enter a valid address.";
       this.setState({ errors: errors });
@@ -119,13 +128,15 @@ class StudentForm extends Component {
 
     //FOR BLANK PHONE
     if (!this.state.phone || !this.state.phone.length) {
+      
       formIsValid = false;
       errors.phone = "Please Enter a valid phone.";
       this.setState({ errors: errors });
     }
 
     //if checkbox of other is checked and custom hobby is empty
-    if (!this.state.customHobby || !this.state.customHobby.length) {
+    if (this.state.userHobbies.includes("Other") && (!this.state.customHobby || !this.state.customHobby.length)) {
+      
       formIsValid = false;
       errors.customHobby = "Please Enter a valid customHobby.";
       this.setState({ errors: errors });
@@ -138,32 +149,45 @@ class StudentForm extends Component {
     let validationPass = this.handleValidation();
     if (validationPass) {
       //Save Student Data
+      let studentData = {
+        name: this.state.name,
+        dob: this.state.dob,
+        college: this.state.college,
+        address: this.state.address,
+        email: this.state.email,
+        gender: this.state.gender,
+        phone: this.state.phone,
+        userHobbies: this.state.userHobbies,
+        customHobby: this.state.customHobby,      
+      }
+      // console.log(studentDetails);
+      let reducerData = this.props.studentDetails;
+      // console.log(reducerData);
+      reducerData.push(studentData);
+      this.props.storeStudentDetails(reducerData);
     }
   };
 
 
   //PUSHING SELECTED HOBBIES & ENABLING OTHER
   checkBoxFunction = (data) =>{
-    // console.log(data);
 
     if(!this.state.userHobbies.includes(data)){
       let currentState = this.state.userHobbies;
       currentState.push(data);
       this.setState({userHobbies : currentState});
     }
-
-    console.log(this.state.userHobbies);
   }
 
   componentDidMount() {
-    this.props.getCollegeDetails("abc");
+    // this.props.getCollegeDetails("abc");
   }
 
   render() {
-    const { open, close } = this.props;
+    const { isPopupActive, closePopup } = this.props;
     return (
       <Dialog
-        open={open}
+        open={isPopupActive}
         TransitionComponent={Transition}
         fullWidth
         maxWidth="md"
@@ -253,17 +277,25 @@ class StudentForm extends Component {
                         </Grid>
 
                         <Grid item className={"form-input-seperator"}>
-                          <Autocomplete
-                            options={["DDD", "s"]}
+                        <Autocomplete
+                            options={this.props.collegeDetails}
+                            getOptionLabel={(option) => option.name}
+                            value={this.state.college}
+                            onChange={(event, newValue) => {
+                              this.setState({ college: newValue });
+                            }}
                             renderInput={(params) => (
                               <TextField
-                                variant="outlined"
-                                {...params}
-                                size="small"
-                                fullWidth
-                              />
-                            )}
-                          />
+                                  variant="outlined"
+                                  {...params}
+                                  size="small"
+                                  onChange={(e) =>
+                                    this.props.getCollegeDetails(e.target.value)
+                                  }
+                                  fullWidth
+                                />
+                              )}
+                            />
                         </Grid>
                       </Grid>
                     </Grid>
@@ -345,6 +377,7 @@ class StudentForm extends Component {
                             row
                             aria-label="gender"
                             name="row-radio-buttons-group"
+                            onChange={(e) => this.onChangeHandler(e, "gender")}
                           >
                             <FormControlLabel
                               value="female"
@@ -477,7 +510,7 @@ class StudentForm extends Component {
           >
             Save
           </Button>
-          <Button className="form-button common-border-color common-color" onClick={() => {console.log(this.props.collegeDetails);}}>
+          <Button className="form-button common-border-color common-color" onClick={this.props.closePopup}>
             Cancel
           </Button>
         </DialogActions>
@@ -488,14 +521,14 @@ class StudentForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    studentDetails: state.studentDetails,
-    collegeDetails: state.collegeDetails,
+    studentDetails: state.studentDetails.studentDetails,
+    collegeDetails: state.collegeDetails.collegeDetails,
   };
 };
 
 export default connect(mapStateToProps, {
   getStudentDetails,
   getCollegeDetails,
-  setCollegeEmpty,
+  storeStudentDetails,
 })(StudentForm);
 

@@ -3,12 +3,13 @@ import clsx from "clsx";
 import { connect } from "react-redux";
 import {Link} from "react-router-dom";
 import "./studentdetails.css";
-import { getStudentDetails } from "../../Store/Actions/actions";
+import { getCollegeDetails, getStudentDetails, storeStudentDetails, } from "../../Store/Actions/actions";
+
 import StudentForm from "../../Components/StudentForm";
 import {TextField , Avatar, Table, TableHead, TableBody, TableCell, TableContainer, TableFooter, TablePagination, TableRow, Paper, Button, IconButton, Typography} from '@material-ui/core';
 import { size } from "lodash";
-// import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-// import EditIcon from '@mui/icons-material/EditOutlined'; 
+import DeleteIcon from '@material-ui/icons/DeleteOutline';
+import EditIcon from '@material-ui/icons/EditOutlined'; 
 import SearchIcon from '@mui/icons-material/SearchOutlined'; 
 import {createTheme, ThemeProvider} from '@material-ui/core/styles';
 
@@ -49,13 +50,13 @@ d
 
 
   render() {
+    console.log(this.props.studentDetails);
     const { showPopup } = this.state;
     return (
       <div>
         <StudentForm
-          open={showPopup}
-          close={this.togglePopup}
-          onClick={this.togglePopup}
+          isPopupActive={showPopup}
+          closePopup={this.togglePopup}
         />
         <div className="main-container">
           <div className="search-block">
@@ -72,6 +73,7 @@ d
           </div>
             <div className="new-student">
               <Button variant="contained" className="new-student-button" onClick={this.togglePopup}>Add New Student</Button>
+            
             </div>
           </div>
 
@@ -106,8 +108,8 @@ d
                         <TableCell align="center">{row.gender}</TableCell>
                         <TableCell align="center">{row.college}</TableCell>
                         <TableCell align="center">{row.hobbies}</TableCell>
-                        {/* <TableCell align="center"><IconButton><EditIcon></EditIcon></IconButton></TableCell>
-                        <TableCell align="center"><IconButton><DeleteIcon></DeleteIcon></IconButton></TableCell> */}
+                        <TableCell align="center"><IconButton><EditIcon></EditIcon></IconButton></TableCell>
+                        <TableCell align="center"><IconButton><DeleteIcon></DeleteIcon></IconButton></TableCell>
 
                       </TableRow>
                     ))}
@@ -127,9 +129,11 @@ d
 const mapStateToProps = (state) => {
   return {
     studentDetails: state.studentDetails.studentDetails,
+    collegeDetails: state.collegeDetails.collegeDetails,
   };
 };
 
 export default connect(mapStateToProps, {
   getStudentDetails,
+  getCollegeDetails,
 })(StudentDetails);

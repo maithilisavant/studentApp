@@ -7,6 +7,8 @@ import { getStudentDetails } from "../../Store/Actions/actions";
 import StudentForm from "../../Components/StudentForm";
 import StudentCard from "../../Components/StudentCard";
 import Header from '../../Assets/header.png'
+import DeleteIcon from '@material-ui/icons/DeleteOutline';
+import EditIcon from '@material-ui/icons/EditOutlined';
 
 import {Button, Grid, Avatar} from '@material-ui/core';
 
@@ -14,11 +16,12 @@ class Homescreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showPopup: true,
+      showPopup: false,
     };
   }
-
+  testing = () => {console.log("testing")};
   togglePopup = () => {
+    // console.log(this.state.showPopup);
     this.setState({ showPopup: !this.state.showPopup });
   };
 
@@ -27,9 +30,8 @@ class Homescreen extends Component {
     return (
       <div>
         <StudentForm
-          open={showPopup}
-          close={this.togglePopup}
-          onClick={this.togglePopup}
+          isPopupActive={showPopup}
+          closePopup={this.togglePopup}
         />
         <div className="container">
           <div className="title">Student Registration System
@@ -43,7 +45,7 @@ class Homescreen extends Component {
               </div>
 
               <div className="new-student">
-                  <Button variant="contained">Add New Student</Button>
+                  <Button variant="contained" onClick={this.togglePopup}>Add New Student</Button>
               </div>
           </div>
 

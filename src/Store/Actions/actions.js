@@ -33,3 +33,9 @@ export const getCollegeDetails =
     dispatch({type: STORE_COLLEGE_DETAILS,
     payload: [],})
   }
+
+  //storing data coming from form
+  export const storeStudentDetails = (data, callback, errorCallback) => async (dispatch) => {
+    dispatch({type: STORE_STUDENT_DETAILS,
+    payload: data,})
+  }
