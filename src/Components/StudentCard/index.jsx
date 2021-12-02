@@ -1,41 +1,45 @@
 //Functional Component
-import React from 'react';
+import React from "react";
 import "./studentCard.css";
 import profileFemale from "../../Assets/F.jpg";
 import profileMale from "../../Assets/M.jpg";
-import {Avatar, IconButton} from '@material-ui/core';
+import { Avatar, IconButton } from "@material-ui/core";
 // import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-// import {EditIcon} from '@mui/icons-material'; 
+// import {EditIcon} from '@mui/icons-material';
 
-function studentCard(){
-    function stringAvatar(name) {
-        return {
-          children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-        };
-    }
-
-    return(
+function studentCard(props) {
+  return (
     <>
-        <div className="card-container">
-            <div className="profile-block">
-                <div className="edit-delete-block">
-                    {/* <IconButton><EditIcon></EditIcon></IconButton>
+      <div className="card-container">
+        <div className="profile-block">
+          <div className="edit-delete-block">
+            {/* <IconButton><EditIcon></EditIcon></IconButton>
                     <IconButton><DeleteIcon></DeleteIcon></IconButton> */}
-                </div>
-                <div className="userprofile">
-                    <img src={profileFemale} alt="user-profile" className="profile-image" ></img>
-                    {/* <Avatar {...stringAvatar('Maithili Savant')} /> */}
-                </div>
-                
-                <div className="username input">Maithili Savant</div>
-                <div className="usercollege input">MIT School of Management</div>
-            </div>
+          </div>
+          <div className="userprofile">
+            <img
+              src={
+                props.mappedData.gender === "female"
+                  ? profileFemale
+                  : profileMale
+              }
+              alt="user-profile"
+              className="profile-image"
+            ></img>
+            {/* <Avatar {...stringAvatar('Maithili Savant')} /> */}
+          </div>
 
-            <div className="info-block">
-                {/* <div className="label dob">Date of Birth</div>
+          <div className="username input">{props.mappedData.name}</div>
+          <div className="usercollege input">
+            {props.mappedData.college.name}
+          </div>
+        </div>
+
+        <div className="info-block">
+          {/* <div className="label dob">Date of Birth</div>
                 <div className="userdob input">31 March 1997</div> */}
 
-                {/* <div className="label email">Email</div>
+          {/* <div className="label email">Email</div>
                 <div className="useremail input">maithilisavant31@gmail.com</div>
 
                 <div className="label phone">Phone</div>
@@ -47,15 +51,14 @@ function studentCard(){
                 <div className="label gender">Gender</div>
                 <div className="usergender input">Female</div> */}
 
-                {/* <div className="usercollege input">MIT school of Management</div> */}
+          {/* <div className="usercollege input">MIT school of Management</div> */}
 
-                {/* <div className="label hibbies">Hobbies</div>
+          {/* <div className="label hibbies">Hobbies</div>
                 <div className="userhibbies input">Drawing, Travelling</div> */}
-            </div>
         </div>
+      </div>
     </>
-
-    )
+  );
 }
 
 export default studentCard;

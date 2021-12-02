@@ -26,13 +26,11 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import PhoneInput from "react-phone-input-2";
-// import { KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import "./studentform.css";
 import "react-phone-input-2/lib/style.css";
 import { hobbies, appColor } from "../../Store/Data/data";
 import {
   getCollegeDetails,
-  getStudentDetails,
   storeStudentDetails,
 } from "../../Store/Actions/actions";
 import { emailValidator, phoneValidator } from "../../Functions/functions";
@@ -45,8 +43,6 @@ class StudentForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
-
       name: "",
       dob: "",
       college: {},
@@ -56,7 +52,6 @@ class StudentForm extends Component {
       phone: "",
       userHobbies: [],
       customHobby: "",
-
       errors: {
         name: "",
         dob: "",
@@ -68,11 +63,11 @@ class StudentForm extends Component {
         userHobbies: "",
         customHobby: "",
       },
-    
     };
   }
 
   onChangeHandler = (e, type) => {
+    //Dynamic state setting
     if (this.state.errors[type]) {
       let errors = this.state.errors;
       errors[type] = "";
@@ -82,12 +77,12 @@ class StudentForm extends Component {
   };
 
   handleValidation = () => {
+    //Validator Function, used before form submit
     let formIsValid = true;
     let errors = this.state.errors;
 
     //FOR BLANK NAME
     if (!this.state.name || !this.state.name.length) {
-      
       formIsValid = false;
       errors.name = "Please Enter a valid name.";
       this.setState({ errors: errors });
@@ -95,7 +90,6 @@ class StudentForm extends Component {
 
     //FOR BLANK DOB
     if (!this.state.dob || this.state.dob == "") {
-      
       console.log(typeof this.state.dob);
       formIsValid = false;
       errors.dob = "Please Enter a valid dob.";
@@ -103,16 +97,18 @@ class StudentForm extends Component {
     }
 
     //FOR BLANK & VALID EMAIL
-    if (!this.state.email || !this.state.email.length || !emailValidator(this.state.email)) {
-      
+    if (
+      !this.state.email ||
+      !this.state.email.length ||
+      !emailValidator(this.state.email)
+    ) {
       formIsValid = false;
       errors.email = "Please Enter a valid email.";
       this.setState({ errors: errors });
     }
- 
+
     //FOR BLANK COLLEGE
     if (!this.state.college || this.state.college == "") {
-      
       formIsValid = false;
       errors.college = "Please Enter a valid college.";
       this.setState({ errors: errors });
@@ -120,7 +116,6 @@ class StudentForm extends Component {
 
     //FOR BLANK ADDRESS
     if (!this.state.address || !this.state.address.length) {
-      
       formIsValid = false;
       errors.address = "Please Enter a valid address.";
       this.setState({ errors: errors });
@@ -128,15 +123,16 @@ class StudentForm extends Component {
 
     //FOR BLANK PHONE
     if (!this.state.phone || !this.state.phone.length) {
-      
       formIsValid = false;
       errors.phone = "Please Enter a valid phone.";
       this.setState({ errors: errors });
     }
 
     //if checkbox of other is checked and custom hobby is empty
-    if (this.state.userHobbies.includes("Other") && (!this.state.customHobby || !this.state.customHobby.length)) {
-      
+    if (
+      this.state.userHobbies.includes("Other") &&
+      (!this.state.customHobby || !this.state.customHobby.length)
+    ) {
       formIsValid = false;
       errors.customHobby = "Please Enter a valid customHobby.";
       this.setState({ errors: errors });
@@ -158,30 +154,26 @@ class StudentForm extends Component {
         gender: this.state.gender,
         phone: this.state.phone,
         userHobbies: this.state.userHobbies,
-        customHobby: this.state.customHobby,      
-      }
+        customHobby: this.state.customHobby,
+      };
       // console.log(studentDetails);
       let reducerData = this.props.studentDetails;
       // console.log(reducerData);
       reducerData.push(studentData);
-      this.props.storeStudentDetails(reducerData);
+      this.props.storeStudentDetails(reducerData, this.props.closePopup); //TODO pass closeFunction as a callback here
     }
   };
 
-
   //PUSHING SELECTED HOBBIES & ENABLING OTHER
-  checkBoxFunction = (data) =>{
-
-    if(!this.state.userHobbies.includes(data)){
+  checkBoxFunction = (data) => {
+    if (!this.state.userHobbies.includes(data)) {
       let currentState = this.state.userHobbies;
       currentState.push(data);
-      this.setState({userHobbies : currentState});
+      this.setState({ userHobbies: currentState });
     }
-  }
+  };
 
-  componentDidMount() {
-    // this.props.getCollegeDetails("abc");
-  }
+  componentDidMount() {}
 
   render() {
     const { isPopupActive, closePopup } = this.props;
@@ -277,7 +269,7 @@ class StudentForm extends Component {
                         </Grid>
 
                         <Grid item className={"form-input-seperator"}>
-                        <Autocomplete
+                          <Autocomplete
                             options={this.props.collegeDetails}
                             getOptionLabel={(option) => option.name}
                             value={this.state.college}
@@ -286,16 +278,16 @@ class StudentForm extends Component {
                             }}
                             renderInput={(params) => (
                               <TextField
-                                  variant="outlined"
-                                  {...params}
-                                  size="small"
-                                  onChange={(e) =>
-                                    this.props.getCollegeDetails(e.target.value)
-                                  }
-                                  fullWidth
-                                />
-                              )}
-                            />
+                                variant="outlined"
+                                {...params}
+                                size="small"
+                                onChange={(e) =>
+                                  this.props.getCollegeDetails(e.target.value)
+                                }
+                                fullWidth
+                              />
+                            )}
+                          />
                         </Grid>
                       </Grid>
                     </Grid>
@@ -424,10 +416,10 @@ class StudentForm extends Component {
                               }
                             />
                             {this.state.errors.phone && (
-                            <div className="form-input-error">
-                              {this.state.errors.phone}
-                            </div>
-                          )}
+                              <div className="form-input-error">
+                                {this.state.errors.phone}
+                              </div>
+                            )}
                           </div>
                         </Grid>
                       </Grid>
@@ -459,13 +451,16 @@ class StudentForm extends Component {
                                             color: appColor,
                                           },
                                         }}
-                                        checked={this.state.userHobbies.includes(item)}
-                                        onChange={() => {this.checkBoxFunction(item)}}
+                                        checked={this.state.userHobbies.includes(
+                                          item
+                                        )}
+                                        onChange={() => {
+                                          this.checkBoxFunction(item);
+                                        }}
                                       />
                                     }
                                     label={item}
                                   />
-                              
                                 </Grid>
                               );
                             })}
@@ -474,28 +469,29 @@ class StudentForm extends Component {
                       </Grid>
                     </Grid>
                     <Grid item lg={6} xl={6} sm={6} xs={12}>
-                      {this.state.userHobbies.includes("Other") && <Grid container direction="column">
-                        <Grid item>
-                          <div className="common-label">
-                            Custom Hobby
-                            <span style={{ color: "red" }}>*</span>
-                          </div>
-                        </Grid>
+                      {this.state.userHobbies.includes("Other") && (
+                        <Grid container direction="column">
+                          <Grid item>
+                            <div className="common-label">
+                              Custom Hobby
+                              <span style={{ color: "red" }}>*</span>
+                            </div>
+                          </Grid>
 
-                        <Grid item className={"form-input-seperator"}>
-                          <InputBase
-                            className="common-form-input"
-                            autoComplete={"off"}
-                            placeholder={"Enter Custom Hobby"}
-                            inputProps={{ maxLength: "50" }}
-                            value={this.state.customHobby}
-                            onChange={(e) => {
-                              this.onChangeHandler(e, "customHobby");
-                            }}
-                          />
-                          
+                          <Grid item className={"form-input-seperator"}>
+                            <InputBase
+                              className="common-form-input"
+                              autoComplete={"off"}
+                              placeholder={"Enter Custom Hobby"}
+                              inputProps={{ maxLength: "50" }}
+                              value={this.state.customHobby}
+                              onChange={(e) => {
+                                this.onChangeHandler(e, "customHobby");
+                              }}
+                            />
+                          </Grid>
                         </Grid>
-                      </Grid>}
+                      )}
                     </Grid>
                   </Grid>
                 </Grid>
@@ -510,7 +506,10 @@ class StudentForm extends Component {
           >
             Save
           </Button>
-          <Button className="form-button common-border-color common-color" onClick={this.props.closePopup}>
+          <Button
+            className="form-button common-border-color common-color"
+            onClick={this.props.closePopup}
+          >
             Cancel
           </Button>
         </DialogActions>
@@ -527,8 +526,6 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  getStudentDetails,
   getCollegeDetails,
   storeStudentDetails,
 })(StudentForm);
-

@@ -1,28 +1,41 @@
 import React, { Component } from "react";
 import clsx from "clsx";
 import { connect } from "react-redux";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./studentdetails.css";
-import { getCollegeDetails, getStudentDetails, storeStudentDetails, } from "../../Store/Actions/actions";
+import { deleteStudentDetails } from "../../Store/Actions/actions";
 
 import StudentForm from "../../Components/StudentForm";
-import {TextField , Avatar, Table, TableHead, TableBody, TableCell, TableContainer, TableFooter, TablePagination, TableRow, Paper, Button, IconButton, Typography} from '@material-ui/core';
+import {
+  TextField,
+  Avatar,
+  Table,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableFooter,
+  TablePagination,
+  TableRow,
+  Paper,
+  Button,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
 import { size } from "lodash";
-import DeleteIcon from '@material-ui/icons/DeleteOutline';
-import EditIcon from '@material-ui/icons/EditOutlined'; 
-import SearchIcon from '@mui/icons-material/SearchOutlined'; 
-import {createTheme, ThemeProvider} from '@material-ui/core/styles';
+import DeleteIcon from "@material-ui/icons/DeleteOutline";
+import EditIcon from "@material-ui/icons/EditOutlined";
+import SearchIcon from "@mui/icons-material/SearchOutlined";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 
 // import {SearchIcon, EditIcon, DeleteIcon} from '@material-ui/icons';
-
-const rows = [];
 
 const theme = createTheme({
   typography: {
     // fontFamily: ['BlinkMacSystemFont',].join(",")
-    fontFamily: 'Raleway, Arial',
+    fontFamily: "Raleway, Arial",
     fontSize: 14,
-  }
+  },
 });
 
 class StudentDetails extends Component {
@@ -34,92 +47,122 @@ class StudentDetails extends Component {
   }
 
   togglePopup = () => {
-    this.setState({ showPopup: !this.state.popup });
+    this.setState({ showPopup: !this.state.showPopup });
   };
 
-  createData(name, dob, email, phone, address, gender, college, hobbies) {
-    return { name, dob, email, phone, address, gender, college, hobbies };
-  }
-d
+  hobbyFunction = (data, customData) => {
+    if (!customData) {
+      return data.toString();
+    }
 
-  rows = [
-    this.createData('Maithili Savant', '31/03/1997', 'maithilisavant31@gmail.com', 6547898525, '71 Pilgrim Avenue Chevy Chase, MD 20815','Female', 'MIT school of Management', 'Drawing, Travelling'),
-    this.createData('Maithili Savant', '31/03/1997', 'maithilisavant31@gmail.com', 6547898525, '71 Pilgrim Avenue Chevy Chase, MD 20815','Female', 'MIT school of Management', 'Drawing, Travelling'),
-    this.createData('Maithili Savant', '31/03/1997', 'maithilisavant31@gmail.com', 6547898525, '71 Pilgrim Avenue Chevy Chase, MD 20815','Female', 'MIT school of Management', 'Drawing, Travelling')
-  ];
-
+    let current = data;
+    let index = current.indexOf("Other");
+    current.splice(index, 1);
+    current.push(customData);
+    return current.toString();
+  };
 
   render() {
-    console.log(this.props.studentDetails);
     const { showPopup } = this.state;
     return (
       <div>
-        <StudentForm
-          isPopupActive={showPopup}
-          closePopup={this.togglePopup}
-        />
+        <StudentForm isPopupActive={showPopup} closePopup={this.togglePopup} />
         <div className="main-container">
           <div className="search-block">
-          
-            <TextField className="search-box" variant="outlined" label="Search" InputProps={{endAdornment: (
-                <IconButton>
-                  <SearchIcon />
-                </IconButton>
-              ),
-            }}></TextField>
+            <TextField
+              className="search-box"
+              variant="outlined"
+              label="Search"
+              InputProps={{
+                endAdornment: (
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                ),
+              }}
+            ></TextField>
 
             <div className="home-page">
-              <Button variant="contained"><Link to="/">Home</Link>{" "}</Button>
-          </div>
+              <Button variant="contained">
+                <Link to="/">Home</Link>{" "}
+              </Button>
+            </div>
             <div className="new-student">
-              <Button variant="contained" className="new-student-button" onClick={this.togglePopup}>Add New Student</Button>
-            
+              <Button
+                variant="contained"
+                className="new-student-button"
+                onClick={this.togglePopup}
+              >
+                Add New Student
+              </Button>
             </div>
           </div>
 
           <div className="user-table-block">
-          <ThemeProvider theme={theme}>
-          <Typography component="div">
-              <TableContainer className="user-list-block">
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell align="center">Name</TableCell>
-                      <TableCell align="center">DOB</TableCell>
-                      <TableCell align="center">Email</TableCell>
-                      <TableCell align="center">Phone</TableCell>
-                      <TableCell align="center">Address</TableCell>
-                      <TableCell align="center">Gender</TableCell>
-                      <TableCell align="center">College</TableCell>
-                      <TableCell align="center">Hobbies</TableCell>
-                      <TableCell align="center"></TableCell>
-                      <TableCell align="center"></TableCell>
-                    </TableRow>
-                  </TableHead>
-
-                  <TableBody>
-                    {this.rows.map((row)=> (
-                      <TableRow key={row.name}>
-                        <TableCell align="center">{row.name}</TableCell>
-                        <TableCell align="center">{row.dob}</TableCell>
-                        <TableCell align="center">{row.email}</TableCell>
-                        <TableCell align="center">{row.phone}</TableCell>
-                        <TableCell align="center">{row.address}</TableCell>
-                        <TableCell align="center">{row.gender}</TableCell>
-                        <TableCell align="center">{row.college}</TableCell>
-                        <TableCell align="center">{row.hobbies}</TableCell>
-                        <TableCell align="center"><IconButton><EditIcon></EditIcon></IconButton></TableCell>
-                        <TableCell align="center"><IconButton><DeleteIcon></DeleteIcon></IconButton></TableCell>
-
+            <ThemeProvider theme={theme}>
+              <Typography component="div">
+                <TableContainer className="user-list-block">
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell align="center">Name</TableCell>
+                        <TableCell align="center">DOB</TableCell>
+                        <TableCell align="center">Email</TableCell>
+                        <TableCell align="center">Phone</TableCell>
+                        <TableCell align="center">Address</TableCell>
+                        <TableCell align="center">Gender</TableCell>
+                        <TableCell align="center">College</TableCell>
+                        <TableCell align="center">Hobbies</TableCell>
+                        <TableCell align="center"></TableCell>
+                        <TableCell align="center"></TableCell>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Typography>
+                    </TableHead>
+
+                    <TableBody>
+                      {this.props.studentDetails.map((row, index) => (
+                        <TableRow key={index}>
+                          <TableCell align="center">{row.name}</TableCell>
+                          <TableCell align="center">
+                            {new Date(row.dob).toISOString().substring(0, 10)}
+                          </TableCell>
+                          <TableCell align="center">{row.email}</TableCell>
+                          <TableCell align="center">{row.phone}</TableCell>
+                          <TableCell align="center">{row.address}</TableCell>
+                          <TableCell align="center">{row.gender}</TableCell>
+                          <TableCell align="center">
+                            {row.college.name}
+                          </TableCell>
+                          <TableCell align="center">
+                            {this.hobbyFunction(
+                              row.userHobbies,
+                              row.customHobby
+                            )}
+                          </TableCell>
+                          <TableCell align="center">
+                            <IconButton>
+                              <EditIcon></EditIcon>
+                            </IconButton>
+                          </TableCell>
+                          <TableCell align="center">
+                            <IconButton>
+                              <DeleteIcon
+                                onClick={() => {
+                                  this.props.deleteStudentDetails(
+                                    this.props.studentDetails,
+                                    index
+                                  );
+                                }}
+                              ></DeleteIcon>
+                            </IconButton>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Typography>
             </ThemeProvider>
           </div>
-
         </div>
       </div>
     );
@@ -134,6 +177,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  getStudentDetails,
-  getCollegeDetails,
+  deleteStudentDetails,
 })(StudentDetails);
