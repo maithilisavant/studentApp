@@ -30,7 +30,12 @@ import PhoneInput from "react-phone-input-2";
 import "./studentform.css";
 import "react-phone-input-2/lib/style.css";
 import { hobbies, appColor } from "../../Store/Data/data";
-import { getCollegeDetails, getStudentDetails } from "../../Store/Actions/actions";
+import {
+  getCollegeDetails,
+  getStudentDetails,
+  setCollegeEmpty,
+} from "../../Store/Actions/actions";
+import { emailValidator, phoneValidator } from "../../Functions/functions";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="bottom" ref={ref} {...props} />;
@@ -50,35 +55,107 @@ class StudentForm extends Component {
       userHobbies: [],
       customHobby: "",
 
-      fields: {},
-      errors: {},
+      errors: {
+        name: "",
+        dob: "",
+        college: "",
+        address: "",
+        email: "",
+        gender: "",
+        phone: "",
+        userHobbies: "",
+        customHobby: "",
+      }, 
     };
   }
 
   onChangeHandler = (e, type) => {
+    if (this.state.errors[type]) {
+      let errors = this.state.errors;
+      errors[type] = "";
+      this.setState({ errors: errors });
+    }
     this.setState({ [type]: e.target.value });
   };
 
-  handleValidation(){
-    let fields = this.state.fileds;
-    let errors = {};
+  handleValidation = () => {
     let formIsValid = true;
+    let errors = this.state.errors;
 
-    //for Name
-    if (!fields[this.state.name]) {
+    //FOR BLANK NAME
+    if (!this.state.name || !this.state.name.length) {
       formIsValid = false;
-      errors[this.state.name] = "Cannot be empty";
+      errors.name = "Please Enter a valid name.";
+      this.setState({ errors: errors });
     }
 
-    if (typeof fields[this.state.name] !== "undefined") {
-      if (!fields[this.state.name].match(/^[a-zA-Z]+$/)) {
-        formIsValid = false;
-        errors[this.state.name] = "Only letters";
-      }
+    //FOR BLANK DOB
+    if (!this.state.dob || !this.state.dob.length) {
+      formIsValid = false;
+      errors.dob = "Please Enter a valid dob.";
+      this.setState({ errors: errors });
     }
+
+    //FOR BLANK & VALID EMAIL
+    if (!this.state.email || !this.state.email.length || !emailValidator(this.state.email)) {
+      formIsValid = false;
+      errors.email = "Please Enter a valid email.";
+      this.setState({ errors: errors });
+    }
+ 
+    //FOR BLANK COLLEGE
+    if (!this.state.college || !this.state.college.length) {
+      formIsValid = false;
+      errors.college = "Please Enter a valid college.";
+      this.setState({ errors: errors });
+    }
+
+    //FOR BLANK ADDRESS
+    if (!this.state.address || !this.state.address.length) {
+      formIsValid = false;
+      errors.address = "Please Enter a valid address.";
+      this.setState({ errors: errors });
+    }
+
+    //FOR BLANK PHONE
+    if (!this.state.phone || !this.state.phone.length) {
+      formIsValid = false;
+      errors.phone = "Please Enter a valid phone.";
+      this.setState({ errors: errors });
+    }
+
+    //if checkbox of other is checked and custom hobby is empty
+    if (!this.state.customHobby || !this.state.customHobby.length) {
+      formIsValid = false;
+      errors.customHobby = "Please Enter a valid customHobby.";
+      this.setState({ errors: errors });
+    }
+
+    return formIsValid;
+  };
+
+  saveForm = () => {
+    let validationPass = this.handleValidation();
+    if (validationPass) {
+      //Save Student Data
+    }
+  };
+
+
+  //PUSHING SELECTED HOBBIES & ENABLING OTHER
+  checkBoxFunction = (data) =>{
+    // console.log(data);
+
+    if(!this.state.userHobbies.includes(data)){
+      let currentState = this.state.userHobbies;
+      currentState.push(data);
+      this.setState({userHobbies : currentState});
+    }
+
+    console.log(this.state.userHobbies);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.getCollegeDetails("abc");
   }
 
@@ -118,6 +195,11 @@ class StudentForm extends Component {
                               this.onChangeHandler(e, "name");
                             }}
                           />
+                          {this.state.errors.name && (
+                            <div className="form-input-error">
+                              {this.state.errors.name}
+                            </div>
+                          )}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -147,6 +229,11 @@ class StudentForm extends Component {
                                   />
                                 )}
                               />
+                              {this.state.errors.dob && (
+                                <div className="form-input-error">
+                                  {this.state.errors.dob}
+                                </div>
+                              )}
                             </Stack>
                           </LocalizationProvider>
                         </Grid>
@@ -200,6 +287,11 @@ class StudentForm extends Component {
                               this.onChangeHandler(e, "email");
                             }}
                           />
+                          {this.state.errors.email && (
+                            <div className="form-input-error">
+                              {this.state.errors.email}
+                            </div>
+                          )}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -227,6 +319,11 @@ class StudentForm extends Component {
                             rows={5}
                             multiline={true}
                           />
+                          {this.state.errors.address && (
+                            <div className="form-input-error">
+                              {this.state.errors.address}
+                            </div>
+                          )}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -293,6 +390,11 @@ class StudentForm extends Component {
                                 this.setState({ phone: phone })
                               }
                             />
+                            {this.state.errors.phone && (
+                            <div className="form-input-error">
+                              {this.state.errors.phone}
+                            </div>
+                          )}
                           </div>
                         </Grid>
                       </Grid>
@@ -324,12 +426,13 @@ class StudentForm extends Component {
                                             color: appColor,
                                           },
                                         }}
-                                        checked={true}
-                                        // onChange={handleChange1}
+                                        checked={this.state.userHobbies.includes(item)}
+                                        onChange={() => {this.checkBoxFunction(item)}}
                                       />
                                     }
                                     label={item}
                                   />
+                              
                                 </Grid>
                               );
                             })}
@@ -338,7 +441,7 @@ class StudentForm extends Component {
                       </Grid>
                     </Grid>
                     <Grid item lg={6} xl={6} sm={6} xs={12}>
-                      <Grid container direction="column">
+                      {this.state.userHobbies.includes("Other") && <Grid container direction="column">
                         <Grid item>
                           <div className="common-label">
                             Custom Hobby
@@ -357,8 +460,9 @@ class StudentForm extends Component {
                               this.onChangeHandler(e, "customHobby");
                             }}
                           />
+                          
                         </Grid>
-                      </Grid>
+                      </Grid>}
                     </Grid>
                   </Grid>
                 </Grid>
@@ -367,10 +471,13 @@ class StudentForm extends Component {
           </Grid>
         </DialogContent>
         <DialogActions className="form-button-container">
-          <Button className="form-button form-save-button common-bk-color" onClick={() => {console.log(this.props.collegeDetails)}}>
+          <Button
+            className="form-button form-save-button common-bk-color"
+            onClick={this.saveForm}
+          >
             Save
           </Button>
-          <Button className="form-button common-border-color common-color">
+          <Button className="form-button common-border-color common-color" onClick={() => {console.log(this.props.collegeDetails);}}>
             Cancel
           </Button>
         </DialogActions>
@@ -383,11 +490,12 @@ const mapStateToProps = (state) => {
   return {
     studentDetails: state.studentDetails,
     collegeDetails: state.collegeDetails,
-
   };
 };
 
 export default connect(mapStateToProps, {
   getStudentDetails,
   getCollegeDetails,
+  setCollegeEmpty,
 })(StudentForm);
+
