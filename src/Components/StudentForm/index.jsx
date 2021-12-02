@@ -49,12 +49,34 @@ class StudentForm extends Component {
       phone: "",
       userHobbies: [],
       customHobby: "",
+
+      fields: {},
+      errors: {},
     };
   }
 
   onChangeHandler = (e, type) => {
     this.setState({ [type]: e.target.value });
   };
+
+  handleValidation(){
+    let fields = this.state.fileds;
+    let errors = {};
+    let formIsValid = true;
+
+    //for Name
+    if (!fields[this.state.name]) {
+      formIsValid = false;
+      errors[this.state.name] = "Cannot be empty";
+    }
+
+    if (typeof fields[this.state.name] !== "undefined") {
+      if (!fields[this.state.name].match(/^[a-zA-Z]+$/)) {
+        formIsValid = false;
+        errors[this.state.name] = "Only letters";
+      }
+    }
+  }
 
   componentDidMount(){
     this.props.getCollegeDetails("abc");
