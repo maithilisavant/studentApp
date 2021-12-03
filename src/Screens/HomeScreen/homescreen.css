@@ -1,29 +1,31 @@
 .container{
     display: flex;
     width: 100vw;
-    height: 100vh;
+    /* height: max-content; */
     flex-direction: column;
-    font-family: 'Roboto';
+}
+
+.header-block{
+    background-color: #a29bfe3c;
 }
 
 .title{
-    width: 100vw;
+    width: 20vw;
     height: 30vh;
-    padding: 20px 0 0 20px;
+    padding: 20px 0 0 60px;
     font-weight: 500;
     font-size: 44px;
     font-family: Poppins-Medium;
     flex-direction: row;
-    /* background-color: rgb(123, 119, 204); */
 }
 
-/* .header-image{
+.header-image{
     display: flex;
-    width:23vw;
-    position: relative;
-    justify-self: flex-end;
-    align-self: flex-end;
-} */
+    height:30vh;
+    top:0;
+    right:0;
+    position: fixed;
+}
 
 .block-1{
     display: flex;
@@ -55,6 +57,11 @@
     justify-content: center;
     align-self: center;
 }
+.form-button {
+    height: 50px !important;
+    width: 150px;
+    text-align: center;
+  }
 
 .footer{
     display: flex;
@@ -66,49 +73,70 @@
 
 @media only screen and (max-width: 768px){
     .title{
+        display: flex;
+        height: 20vh;
         justify-content: center;
         text-align: center;
-        margin-bottom: 1rem;
+        align-content: center;
+        flex-direction: column;
+        padding: 2px 0 0 6px;
+        font-size: 32px;
     }
     .block-1{
         justify-content: space-evenly;
         gap:0rem;
+    }
+
+    .header-image{
+        height: 20vh;
     }
 }
 
-/* @media only screen and (min-width: 1024px) and (max-height: 1366px){
-    .title{
-        height: 6vh;
-        justify-content: center;
-        text-align: center;
-        margin-bottom: 0rem;
-        padding-bottom: 0;
-    }
-    .block-1{
-        height: 10vh;
-        justify-content: space-evenly;
-        gap:0rem;
-        padding: 0 0 0 0;
-    }
-} */
-
 @media(max-width: 320px){
+    .container{
+        display: flex;
+        width: inherit;
+        justify-content: center;
+        align-content: center;
+    }
+
+    .header-block{
+        display: flex;
+        width: inherit;
+        position: absolute;
+        top:0;
+        left:0;
+        height: 20vh;
+    }
+
     .title{
+        display: flex;
+        height: 20vh;
         justify-content: center;
         text-align: center;
-        font-weight: 500;
-        font-size: 30px;
+        align-content: center;
+        flex-direction: column;
+        top:0;
+        padding: 0;
+        font-size: 32px;
+    }
+    .header-image{
+        display: none;
+        height: 20vh;
     }
     .block-1{
-        height: 10vh;
+        margin-top: 4rem;
+        width: inherit;
+        height: 15vh;
         gap:1rem;
-        justify-content: center;
-        
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
     }
     
     .student-count-block{
         flex-direction: row;
-        font-size: 20px;
+        font-size: 24px;
     }
 
     .student-cards-block{

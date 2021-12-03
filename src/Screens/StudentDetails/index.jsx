@@ -83,12 +83,13 @@ class StudentDetails extends Component {
             ></TextField>
 
             <div className="home-page">
-              <Button variant="contained">
+              <Button className="common-color home-button" variant="contained">
                 <Link to="/">Home</Link>{" "}
               </Button>
             </div>
             <div className="new-student">
               <Button
+                className="form-button common-color"
                 variant="contained"
                 className="new-student-button"
                 onClick={this.togglePopup}

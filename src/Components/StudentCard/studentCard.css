@@ -12,9 +12,9 @@
     margin: 0.8rem;
 }
 
-/* .student-count{
-    color: rgb(101, 97, 181)
-} */
+.student-count{
+    color: #a29bfe;
+}
 
 .card-container:hover{
     outline: 4px solid rgb(123, 119, 204);

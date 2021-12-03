@@ -30,6 +30,18 @@
     width: 20rem;
 }
 
+.form-button {
+    height: 50px !important;
+    width: 170px;
+    text-align: center;
+  }
+
+.home-button{
+    height: 35px !important;
+    width: 150px;
+    text-align: center;
+}
+
 @media only screen and (max-width: 768px){
     .search-block{
         flex-direction: column;

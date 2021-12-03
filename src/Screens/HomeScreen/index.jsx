@@ -5,7 +5,7 @@ import "./homescreen.css";
 import { Link } from "react-router-dom";
 import StudentForm from "../../Components/StudentForm";
 import StudentCard from "../../Components/StudentCard";
-import Header from "../../Assets/header.png";
+import Header from "../../Assets/Background/header3.svg";
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/EditOutlined";
 
@@ -32,9 +32,11 @@ class Homescreen extends Component {
       <div>
         <StudentForm isPopupActive={showPopup} closePopup={this.togglePopup} />
         <div className="container">
-          <div className="title">
-            Student Registration System
-            {/* <img src={Header} alt="header" className="header-image"/> */}
+          <div className="header-block">
+            <div className="title">
+              Student Registry
+            </div>
+            <div className="header-image"><img src={Header} alt="header image" /></div>
           </div>
 
           <div className="block-1">
@@ -46,7 +48,7 @@ class Homescreen extends Component {
             </div>
 
             <div className="new-student">
-              <Button variant="contained" onClick={this.togglePopup}>
+              <Button className="form-button common-border-color" variant="text" onClick={this.togglePopup}>
                 Add New Student
               </Button>
             </div>
@@ -64,7 +66,7 @@ class Homescreen extends Component {
           </Grid>
 
           <div className="student-card-more">
-            <Button variant="outlined">
+            <Button variant="outlined" className="form-button common-bk-color common-border-color">
               <Link to="/student-details">View Student List</Link>{" "}
             </Button>
           </div>

@@ -159,8 +159,10 @@ class StudentForm extends Component {
       // console.log(studentDetails);
       let reducerData = this.props.studentDetails;
       // console.log(reducerData);
-      reducerData.push(studentData);
+      reducerData.unshift(studentData);
       this.props.storeStudentDetails(reducerData, this.props.closePopup); //TODO pass closeFunction as a callback here
+
+      // clearFormField();
     }
   };
 
@@ -172,6 +174,11 @@ class StudentForm extends Component {
       this.setState({ userHobbies: currentState });
     }
   };
+
+  // clearFormField = (e) =>{
+  //   e.previoutDefault();
+  //   e.target.reset();
+  // }
 
   componentDidMount() {}
 
@@ -381,11 +388,11 @@ class StudentForm extends Component {
                               control={<Radio />}
                               label="Male"
                             />
-                            <FormControlLabel
+                            {/* <FormControlLabel
                               value="other"
                               control={<Radio />}
                               label="Other"
-                            />
+                            /> */}
                           </RadioGroup>
                         </Grid>
                       </Grid>
