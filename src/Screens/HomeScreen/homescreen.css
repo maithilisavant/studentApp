@@ -1,48 +1,51 @@
-.container{
+.container {
     display: flex;
-    width: 100vw;
-    height: auto;
+    width: 100vw !important;
     flex-direction: column;
-}
-
-.header-block{
+    overflow: hidden;
+  }
+  
+  .header-block {
     background-color: #a29bfe20;
-}
-
-.title{
+    overflow: hidden !;
+  }
+  
+  .title {
     width: 20vw;
     height: 30vh;
     padding: 20px 0 0 60px;
     font-family: Poppins-Medium;
     font-weight: 500;
     flex-direction: row;
-}
-
-.subtitle1{
-    font-size: 44px;
-}
-.subtitle2{
-    font-size: 24px;
-    
-}
-
-.header-image{
+  }
+  .header-image {
     display: flex;
-    height:30vh;
-    top:0;
-    right:0;
+    height: 30vh;
+    top: 0;
+    right: 0;
     position: absolute;
-}
-
-.loaderImage{
+  }
+  .subtitle1 {
+    font-size: 44px;
+  }
+  .subtitle2 {
+    font-size: 24px;
+  }
+  
+  .header-image {
     display: flex;
-    height:20rem;
+    height: 30vh;
+  }
+  
+  .loaderImage {
+    display: flex;
+    height: 20rem;
     justify-self: center;
     align-self: center;
     place-self: center;
-}
-
-.block-1{
+  }
+  
+  .block-1 {
     display: flex;
     width: inherit;
     height: 10vh;
@@ -50,149 +53,97 @@
     justify-content: start;
     gap: 10rem;
     align-items: center;
-}
-
-.student-count-block{
+  }
+  
+  .student-count-block {
     display: flex;
     flex-direction: row;
     width: 100vw;
     justify-content: flex-start;
     font-size: 32px;
-    gap:2rem;
+    gap: 2rem;
     padding: 0 0 0 5rem;
-}
-.student-card-container{
+  }
+  .student-card-container {
     display: flex;
     justify-content: center;
-}
-.student-cards-block{
+  }
+  .student-cards-block {
     display: flex;
-    width:60rem;
+    width: 60rem;
     height: auto;
     background-color: #fff;
     justify-content: center;
-}
-
-.button-block{
+  }
+  
+  .button-block {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-self: center;
-    margin-top: 2rem;
-    gap:5rem;
-}
-
-@media only screen and (max-width: 768px){
-    .title{
-        width: 50vw;
-        height: 20vh;
-        padding: 10px 0 0 10px;
-        /* font-family: Poppins-Regular; */
-        font-weight: 500;
-        flex-direction: row;
-
-        /* background-color: khaki; */
+    margin-top: 50px;
+    gap: 5rem;
+    margin-bottom: 50px;
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .title {
+      width: 50vw;
+      height: 20vh;
+      padding: 10px 0 0 10px;
+      /* font-family: Poppins-Regular; */
+      font-weight: 500;
+      flex-direction: row;
+  
+      /* background-color: khaki; */
     }
-    
-    .subtitle1{
-        font-size: 32px;
+  
+    .subtitle1 {
+      font-size: 32px;
     }
-    .subtitle2{
-        font-size: 14px;
-        
+    .subtitle2 {
+      font-size: 14px;
     }
-    .block-1{
-        justify-content: space-evenly;
-        gap:0rem;
+  
+    .header-image {
+      height: 20vh;
     }
-
-    .header-image{
-        height: 20vh;
+  
+    .loaderImage {
+      height: 10rem;
     }
-
-    .loaderImage{
-        height:10rem;
+  
+    .block-1 {
+      display: flex;
+      width: 100vw !important;
+  
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 2px;
     }
-    
-    .block-1{
-        display: flex;
-        width: 100vw;
-        height: 10vh;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        padding: 2px;
+  
+    .student-card-container {
+      flex-direction: column;
     }
-
-    .student-card-container{
-        flex-direction: column;
+    .student-cards-block {
+      display: flex;
+      width: 60rem;
+      height: auto;
+      background-color: #fff;
+      justify-content: center;
     }
-    .student-cards-block{
-        display: flex;
-        width:60rem;
-        height: auto;
-        background-color: #fff;
-        justify-content: center;
+  
+    .button-block {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-self: center;
+      gap: 0rem;
     }
-
-    .button-block{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-self: center;
-        margin: 2rem;
-        gap:3rem;
+  
+    .home-btn {
+      width: 48% !important;
     }
-}
-
-@media(max-width: 320px){
-    .container{
-        display: flex;
-        width: inherit;
-        justify-content: center;
-        align-content: center;
-    }
-
-    .header-block{
-        display: flex;
-        width: inherit;
-        position: absolute;
-        top:0;
-        left:0;
-        height: 20vh;
-    }
-
-    .title{
-        display: flex;
-        height: 20vh;
-        justify-content: center;
-        text-align: center;
-        align-content: center;
-        flex-direction: column;
-        top:0;
-        padding: 0;
-        font-size: 32px;
-    }
-    .header-image{
-        display: none;
-        height: 20vh;
-    }
-    .block-1{
-        margin-top: 4rem;
-        width: inherit;
-        height: 15vh;
-        gap:1rem;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-    }
-    
-    .student-count-block{
-        flex-direction: row;
-        font-size: 24px;
-    }
-
-    .student-cards-block{
-        margin-top: 3rem;
-    }
-}
+  }
+  

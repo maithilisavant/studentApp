@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import clsx from "clsx";
 import { connect } from "react-redux";
@@ -55,6 +54,20 @@ class Homescreen extends Component {
               </div>
             </div>
 
+            <div className="button-block">
+              <Button
+                className="form-button form-save-button common-bk-color home-btn"
+                variant="text"
+                onClick={this.togglePopup}
+              >
+                Add New Student
+              </Button>
+
+              <Button className="form-button common-border-color common-color home-btn">
+                <Link to="/student-details">View Student List</Link>{" "}
+              </Button>
+            </div>
+
             <div className="student-card-container">
               {this.state.studentDetails.length === 0 ? (
                 <div className="loaderImage">
@@ -88,27 +101,6 @@ class Homescreen extends Component {
                 </Grid>
               )}
             </div>
-
-            <div className="button-block">
-              <div className="new-student">
-                <Button
-                  className="form-button form-save-button common-bk-color"
-                  variant="text"
-                  onClick={this.togglePopup}
-                >
-                  Add New Student
-                </Button>
-              </div>
-              <div>
-                <Button className="form-button common-border-color common-color">
-                  <Link to="/student-details">View Student List</Link>{" "}
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <div className="footer">
-            {/* <img src={Footer} alt="header" className="footer-image"/> */}
           </div>
         </div>
       </>
