@@ -1,22 +1,28 @@
 .container{
     display: flex;
     width: 100vw;
-    /* height: max-content; */
     flex-direction: column;
 }
 
 .header-block{
-    background-color: #a29bfe3c;
+    background-color: #a29bfe20;
 }
 
 .title{
     width: 20vw;
     height: 30vh;
     padding: 20px 0 0 60px;
-    font-weight: 500;
-    font-size: 44px;
     font-family: Poppins-Medium;
+    font-weight: 500;
     flex-direction: row;
+}
+
+.subtitle1{
+    font-size: 44px;
+}
+.subtitle2{
+    font-size: 24px;
+    
 }
 
 .header-image{
@@ -24,7 +30,15 @@
     height:30vh;
     top:0;
     right:0;
-    position: fixed;
+    position: absolute;
+}
+
+.loaderImage{
+    display: flex;
+    height:20rem;
+    justify-self: center;
+    align-self: center;
+    place-self: center;
 }
 
 .block-1{
@@ -37,31 +51,37 @@
     justify-content: flex-start;
     gap: 10rem;
     align-items: center;
-
-    /* background-color: cornflowerblue; */
 }
 
 .student-count-block{
-    flex-direction: column;
-    padding-top: 10px;
-
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    justify-content: flex-start;
     font-size: 32px;
+    gap:2rem;
+    padding: 0 0 0 5rem;
 }
-
-.student-cards-block{
+.student-card-container{
+    display: flex;
     justify-content: center;
-    /* background-color: darkgoldenrod; */
+}
+.student-cards-block{
+    display: flex;
+    width:60rem;
+    height: auto;
+    background-color: #fff;
+    justify-content: center;
 }
 
-.student-card-more{
+.button-block{
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-self: center;
+    margin-top: 2rem;
+    gap:5rem;
 }
-.form-button {
-    height: 50px !important;
-    width: 150px;
-    text-align: center;
-  }
 
 .footer{
     display: flex;

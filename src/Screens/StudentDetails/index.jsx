@@ -43,6 +43,8 @@ class StudentDetails extends Component {
     super(props);
     this.state = {
       showPopup: false,
+      searchText: "",
+      studentDetails: this.props.studentDetails,
     };
   }
 
@@ -62,6 +64,27 @@ class StudentDetails extends Component {
     return current.toString();
   };
 
+  searchFunction = () => {
+    let searchText = this.state.searchText;
+    const filteredData = this.props.studentDetails.filter(function (item) {
+      let itemName = item.name.toUpperCase(); //MAITHILI
+      let itemEmail = item.email.toUpperCase();
+      const textData = searchText.toUpperCase(); //MAI
+
+      return (
+        itemName.indexOf(textData) > -1 || itemEmail.indexOf(textData) > -1
+      );
+    });
+
+    this.setState({ studentDetails: filteredData });
+  };
+
+  removeStudent = (data) => {
+    let index = this.props.studentDetails.indexOf(data);
+
+    this.props.deleteStudentDetails(this.props.studentDetails, index);
+  };
+
   render() {
     const { showPopup } = this.state;
     return (
@@ -73,6 +96,12 @@ class StudentDetails extends Component {
               className="search-box"
               variant="outlined"
               label="Search"
+              value={this.state.searchText}
+              onChange={(e) => {
+                this.setState({ searchText: e.target.value }, () => {
+                  this.searchFunction();
+                });
+              }}
               InputProps={{
                 endAdornment: (
                   <IconButton>
@@ -83,15 +112,13 @@ class StudentDetails extends Component {
             ></TextField>
 
             <div className="home-page">
-              <Button className="common-color home-button" variant="contained">
+              <Button className="form-button form-save-button common-bk-color">
                 <Link to="/">Home</Link>{" "}
               </Button>
             </div>
             <div className="new-student">
               <Button
-                className="form-button common-color"
-                variant="contained"
-                className="new-student-button"
+                className="form-button common-border-color common-color"
                 onClick={this.togglePopup}
               >
                 Add New Student
@@ -120,7 +147,7 @@ class StudentDetails extends Component {
                     </TableHead>
 
                     <TableBody>
-                      {this.props.studentDetails.map((row, index) => (
+                      {this.state.studentDetails.map((row, index) => (
                         <TableRow key={index}>
                           <TableCell align="center">{row.name}</TableCell>
                           <TableCell align="center">
@@ -147,12 +174,7 @@ class StudentDetails extends Component {
                           <TableCell align="center">
                             <IconButton>
                               <DeleteIcon
-                                onClick={() => {
-                                  this.props.deleteStudentDetails(
-                                    this.props.studentDetails,
-                                    index
-                                  );
-                                }}
+                                onClick={() => this.removeStudent(row)}
                               ></DeleteIcon>
                             </IconButton>
                           </TableCell>

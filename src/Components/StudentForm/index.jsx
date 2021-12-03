@@ -172,6 +172,11 @@ class StudentForm extends Component {
       let currentState = this.state.userHobbies;
       currentState.push(data);
       this.setState({ userHobbies: currentState });
+    } else {
+      let currentState = this.state.userHobbies;
+      let itemIndex = currentState.indexOf(data);
+      currentState.splice(itemIndex, 1);
+      this.setState({ userHobbies: currentState });
     }
   };
 
