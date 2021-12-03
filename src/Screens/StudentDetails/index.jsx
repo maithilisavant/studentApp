@@ -4,31 +4,25 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import "./studentdetails.css";
 import { deleteStudentDetails } from "../../Store/Actions/actions";
-
+import Loader from "../../Assets/Background/loader.svg";
 import StudentForm from "../../Components/StudentForm";
 import {
   TextField,
-  Avatar,
   Table,
   TableHead,
   TableBody,
   TableCell,
   TableContainer,
-  TableFooter,
-  TablePagination,
   TableRow,
-  Paper,
   Button,
   IconButton,
   Typography,
 } from "@material-ui/core";
-import { size } from "lodash";
+
 import DeleteIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/EditOutlined";
 import SearchIcon from "@mui/icons-material/SearchOutlined";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
-
-// import {SearchIcon, EditIcon, DeleteIcon} from '@material-ui/icons';
 
 const theme = createTheme({
   typography: {
@@ -45,6 +39,8 @@ class StudentDetails extends Component {
       showPopup: false,
       searchText: "",
       studentDetails: this.props.studentDetails,
+      editData: undefined,
+      editKey: 0,
     };
   }
 
@@ -81,15 +77,28 @@ class StudentDetails extends Component {
 
   removeStudent = (data) => {
     let index = this.props.studentDetails.indexOf(data);
+    this.props.deleteStudentDetails(this.props.studentDetails, index, () => {
+      this.setState({ studentDetails: this.props.studentDetails });
+    });
+  };
 
-    this.props.deleteStudentDetails(this.props.studentDetails, index);
+  editFunction = (data) => {
+    let index = this.props.studentDetails.indexOf(data);
+    this.setState({ editData: data, editKey: index, showPopup: true });
   };
 
   render() {
     const { showPopup } = this.state;
     return (
       <div>
-        <StudentForm isPopupActive={showPopup} closePopup={this.togglePopup} />
+        {showPopup && (
+          <StudentForm
+            isPopupActive={showPopup}
+            closePopup={this.togglePopup}
+            editData={this.state.editData}
+            editKey={this.state.editKey}
+          />
+        )}
         <div className="main-container">
           <div className="search-block">
             <TextField
@@ -119,17 +128,28 @@ class StudentDetails extends Component {
             <div className="new-student">
               <Button
                 className="form-button common-border-color common-color"
-                onClick={this.togglePopup}
+                onClick={() => {
+                  this.setState({
+                    editData: undefined,
+                    editKey: 0,
+                    showPopup: true,
+                  });
+                }}
               >
                 Add New Student
               </Button>
             </div>
           </div>
-
+          {this.state.studentDetails.length === 0 ? (
+              <div className="loaderImage">
+                <img src={Loader} alt="Loader image" />
+              </div>
+            ) : (
           <div className="user-table-block">
+          
             <ThemeProvider theme={theme}>
               <Typography component="div">
-                <TableContainer className="user-list-block">
+                <TableContainer>
                   <Table>
                     <TableHead>
                       <TableRow>
@@ -145,7 +165,6 @@ class StudentDetails extends Component {
                         <TableCell align="center"></TableCell>
                       </TableRow>
                     </TableHead>
-
                     <TableBody>
                       {this.state.studentDetails.map((row, index) => (
                         <TableRow key={index}>
@@ -168,7 +187,9 @@ class StudentDetails extends Component {
                           </TableCell>
                           <TableCell align="center">
                             <IconButton>
-                              <EditIcon></EditIcon>
+                              <EditIcon
+                                onClick={() => this.editFunction(row)}
+                              ></EditIcon>
                             </IconButton>
                           </TableCell>
                           <TableCell align="center">
@@ -181,11 +202,13 @@ class StudentDetails extends Component {
                         </TableRow>
                       ))}
                     </TableBody>
+                    
                   </Table>
                 </TableContainer>
               </Typography>
             </ThemeProvider>
           </div>
+          )}
         </div>
       </div>
     );

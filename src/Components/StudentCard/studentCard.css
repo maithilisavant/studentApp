@@ -10,6 +10,7 @@
     flex-direction: column;
     padding: 1.2rem;
     margin: 0.8rem;
+    font-family: Poppins-Medium;
 }
 
 .student-count{
@@ -19,11 +20,6 @@
 .card-container:hover{
     outline: 4px solid rgb(123, 119, 204);
     transition: outline 0.4s linear;
-}
-
-.edit-delete-block{
-    display: flex;
-    justify-content: space-between;
 }
 
 .userprofile{

@@ -24,7 +24,6 @@ import Stack from "@mui/material/Stack";
 import DatePicker from "@mui/lab/DatePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import PhoneInput from "react-phone-input-2";
 import "./studentform.css";
 import "react-phone-input-2/lib/style.css";
@@ -52,6 +51,8 @@ class StudentForm extends Component {
       phone: "",
       userHobbies: [],
       customHobby: "",
+      isEdit: false,
+      editKey: 0,
       errors: {
         name: "",
         dob: "",
@@ -90,7 +91,6 @@ class StudentForm extends Component {
 
     //FOR BLANK DOB
     if (!this.state.dob || this.state.dob == "") {
-      console.log(typeof this.state.dob);
       formIsValid = false;
       errors.dob = "Please Enter a valid dob.";
       this.setState({ errors: errors });
@@ -156,13 +156,17 @@ class StudentForm extends Component {
         userHobbies: this.state.userHobbies,
         customHobby: this.state.customHobby,
       };
-      // console.log(studentDetails);
-      let reducerData = this.props.studentDetails;
-      // console.log(reducerData);
-      reducerData.unshift(studentData);
-      this.props.storeStudentDetails(reducerData, this.props.closePopup); //TODO pass closeFunction as a callback here
 
-      // clearFormField();
+      let reducerData = this.props.studentDetails;
+
+      if (this.state.isEdit) {
+        reducerData[this.state.editKey] = studentData;
+        this.props.storeStudentDetails(reducerData, this.props.closePopup);
+      } else {
+        reducerData.unshift(studentData);
+        this.props.storeStudentDetails(reducerData, this.props.closePopup);
+        this.clearFormField();
+      }
     }
   };
 
@@ -180,12 +184,44 @@ class StudentForm extends Component {
     }
   };
 
-  // clearFormField = (e) =>{
-  //   e.previoutDefault();
-  //   e.target.reset();
-  // }
+  clearFormField = () => {
+    this.setState({
+      name: "",
+      dob: "",
+      college: {},
+      address: "",
+      email: "",
+      gender: "",
+      phone: "",
+      userHobbies: [],
+      customHobby: "",
+      isEdit: false,
+      editKey: 0,
+    });
+  };
 
-  componentDidMount() {}
+  componentDidMount() {
+    //Check if edit mode is enabled
+
+    if (this.props.editData) {
+      let data = this.props.editData;
+      let editKey = this.props.editKey;
+
+      this.setState({
+        isEdit: true,
+        editKey: editKey,
+        name: data.name,
+        dob: data.dob,
+        college: data.college,
+        address: data.address,
+        email: data.email,
+        gender: data.gender,
+        phone: data.phone,
+        userHobbies: data.userHobbies,
+        customHobby: data.customHobby,
+      });
+    }
+  }
 
   render() {
     const { isPopupActive, closePopup } = this.props;
@@ -196,7 +232,9 @@ class StudentForm extends Component {
         fullWidth
         maxWidth="md"
       >
-        <DialogTitle>ADD NEW STUDENT</DialogTitle>
+        <DialogTitle>
+          {this.state.isEdit ? "EDIT STUDENT" : "ADD NEW STUDENT"}
+        </DialogTitle>
         <DialogContent>
           <Grid container direction="column" className={"dialog-container"}>
             <Grid item className={"form-container"} xs={12}>

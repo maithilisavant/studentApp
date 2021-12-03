@@ -26,8 +26,10 @@ export const storeStudentDetails = (data, callback) => async (dispatch) => {
   callback();
 };
 
-export const deleteStudentDetails = (data, index) => async (dispatch) => {
-  let current = data;
-  current.splice(index, 1);
-  dispatch({ type: STORE_STUDENT_DETAILS, payload: current });
-};
+export const deleteStudentDetails =
+  (data, index, callback) => async (dispatch) => {
+    let current = data;
+    current.splice(index, 1);
+    dispatch({ type: STORE_STUDENT_DETAILS, payload: current });
+    callback();
+  };
